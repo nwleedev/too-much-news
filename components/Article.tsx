@@ -9,15 +9,16 @@ const Article = ({ article, i }: { article: IArticle; i: number }) => {
       href={article.url}
       target="_blank"
       rel="noreferrer"
-      className={`shadow-xl rounded-xl opacity-${isSelected ? '100' : '60'}`}
+      className={`shadow-xl rounded-xl`}
     >
       <div
-        className={`rounded-xl h-80 px-2 py-1 `}
+        className={`rounded-xl h-80 px-2 py-1`}
         style={{
           backgroundImage: `url(${article.urlToImage})`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
+          opacity: isSelected ? 1 : 0.5,
         }}
         onMouseOver={(e) => {
           setIsSelected(true);
