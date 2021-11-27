@@ -16,7 +16,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const resp = await axios.get(API_URL);
   const data: IArticle[] = resp.data.articles;
   const articles = data.filter(
-    (el) => el.url.includes('https') && el.urlToImage,
+    (el) =>
+      el.url.includes('https') &&
+      el.urlToImage &&
+      el.urlToImage.includes('https'),
   );
   return {
     props: {
