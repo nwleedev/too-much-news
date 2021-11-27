@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import axios from 'axios';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const BANNED_URLS = 'visitkorea' || 'inews24';
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
@@ -15,17 +16,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const resp = await axios.get(API_URL);
   const data: IArticle[] = resp.data.articles;
+
   const articles = data.filter(
     (el) =>
       el.url.includes('https') &&
       el.urlToImage &&
       el.urlToImage.includes('https') &&
-      !el.urlToImage.includes('inews24'),
+      !el.urlToImage.includes(BANNED_URLS),
   );
   return {
     props: {
       data: articles,
     },
+    revalidate: 30 * 60,
   };
 };
 
