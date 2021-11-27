@@ -19,7 +19,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     (el) =>
       el.url.includes('https') &&
       el.urlToImage &&
-      el.urlToImage.includes('https'),
+      el.urlToImage.includes('https') &&
+      !el.urlToImage.includes('inews24'),
   );
   return {
     props: {

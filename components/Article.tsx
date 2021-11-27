@@ -9,12 +9,10 @@ const Article = ({ article, i }: { article: IArticle; i: number }) => {
       href={article.url}
       target="_blank"
       rel="noreferrer"
-      className="shadow-xl rounded-xl"
+      className={`shadow-xl rounded-xl opacity-${isSelected ? '100' : '60'}`}
     >
       <div
-        className={`rounded-xl h-80 opacity-${
-          isSelected ? '100' : '60'
-        } px-2 py-1 `}
+        className={`rounded-xl h-80 px-2 py-1 `}
         style={{
           backgroundImage: `url(${article.urlToImage})`,
           backgroundPosition: 'center',
