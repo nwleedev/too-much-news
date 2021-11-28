@@ -1,5 +1,5 @@
 {
-  "name": "too-many-news",
+  "name": "too-much-news",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,6 +11,7 @@
     "@netlify/plugin-nextjs": "^3.9.2",
     "axios": "^0.24.0",
     "next": "12.0.4",
+    "next-pwa": "^5.4.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
