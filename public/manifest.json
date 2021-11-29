@@ -1,10 +1,9 @@
 {
-  "name": "Too Much News",
-  "short_name": "너무 많은 신문",
+  "name": "너무 많은 신문",
+  "short_name": "TooMuch",
   "theme_color": "#f3f4f7",
   "background_color": "#f3f4f7",
   "display": "standalone",
-  "orientation": "portrait",
   "description": "넘치는 정보 속에서 필요한 것들만 편하게 보세요.",
   "scope": "/",
   "start_url": "/",
