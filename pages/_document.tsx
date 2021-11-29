@@ -19,21 +19,7 @@ class MyDocument extends Document {
           />
           <meta name="og:image" content="/icon.png" />
           <meta name="twitter:image" content="/icon.png" />
-          <meta name="theme-color" content="#f3f4f7" />
-          <link rel="manifest" href="/manifest.json" />
-          <link
-            href="/icons/icon-16x16.png"
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-          />
-          <link
-            href="/icons/icon-32x32.png"
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-          />
-          <link rel="apple-touch-icon" href="/icons/icon-180x180.png"></link>
+          <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
