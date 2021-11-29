@@ -6,29 +6,53 @@ import Article from '../components/Article';
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const BANNED_URLS = 'visitkorea' || 'inews24';
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  if (!API_URL) {
+  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  if (!API_KEY) {
     return {
       props: {
         data: [],
       },
     };
   }
-  const resp = await axios.get(API_URL);
-  const data: IArticle[] = resp.data.articles;
 
-  const articles = data.filter(
+  const API_URL = `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}&category=`;
+  const categories = [
+    'business',
+    'entertainment',
+    'science',
+    'health',
+    'technology',
+  ];
+  const data = await Promise.all(
+    categories.map((category) =>
+      axios
+        .get(API_URL + category)
+        .then((resp) => resp.data)
+        .then((data) => data.articles as IArticle[])
+        .catch(() => [] as IArticle[]),
+    ),
+  );
+
+  const collection: IArticle[] = [];
+  data.forEach((array) => {
+    collection.push(...array);
+  });
+  const articles = collection.filter(
     (el) =>
       el.url.includes('https') &&
       el.urlToImage &&
       el.urlToImage.includes('https') &&
       !el.urlToImage.includes(BANNED_URLS),
   );
+  articles.sort(
+    (b, a) =>
+      new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime(),
+  );
   return {
     props: {
       data: articles,
     },
-    revalidate: 30 * 60,
+    revalidate: 60 * 60,
   };
 };
 

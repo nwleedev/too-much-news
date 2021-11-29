@@ -17,8 +17,8 @@ class MyDocument extends Document {
             name="keywords"
             content="뉴스,정보,국제,시사,경제,환경,날씨,기후,너무많은뉴스,toomuchnews,toomuch,신문,인터넷신문,문화,사람,연예,스포츠,이야기,게임"
           />
-          <meta name="og:image" content="/main_icon.png" />
-          <meta name="twitter:image" content="/main_icon.png" />
+          <meta name="og:image" content="/icon.png" />
+          <meta name="twitter:image" content="/icon.png" />
           <meta name="theme-color" content="#f3f4f7" />
           <link rel="manifest" href="/manifest.json" />
           <link
