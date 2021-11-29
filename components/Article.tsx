@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IArticle } from '../interfaces/article';
 
 const Article = ({ article, i }: { article: IArticle; i: number }) => {
   const [isSelected, setIsSelected] = useState(false);
-
+  useEffect(() => {
+    const background = document.getElementById(`background_${i}`);
+    if (background && !background?.style.backgroundImage) {
+      console.log('Background Image Error');
+      background.style.backgroundImage = "url('/on_error.png')";
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <a
       href={article.url}
@@ -12,9 +19,10 @@ const Article = ({ article, i }: { article: IArticle; i: number }) => {
       className={`shadow-xl rounded-xl`}
     >
       <div
+        id={`background_${i}`}
         className={`rounded-xl h-80 px-2 py-1`}
         style={{
-          backgroundImage: `url(${article.urlToImage})`,
+          backgroundImage: `url(${article.urlToImage}), url('/on_error.png')`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
