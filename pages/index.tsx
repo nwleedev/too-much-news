@@ -5,7 +5,6 @@ import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const BANNED_URLS = 'visitkorea' || 'inews24';
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
   if (!API_KEY) {
     return {
@@ -41,8 +40,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     (el) =>
       el.url.includes('https') &&
       el.urlToImage &&
-      el.urlToImage.includes('https') &&
-      !el.urlToImage.includes(BANNED_URLS),
+      el.urlToImage.includes('https'),
   );
   articles.sort(
     (b, a) =>
