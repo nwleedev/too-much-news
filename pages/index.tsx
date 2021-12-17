@@ -14,14 +14,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const API_URL = `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}&category=`;
-  const categories = [
-    'business',
-    'entertainment',
-    'science',
-    'health',
-    'technology',
-  ];
+  const API_URL = `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}&pageSize=100&category=`;
+  const categories = ['business', 'science', 'health', 'technology'];
   const data = await Promise.all(
     categories.map((category) =>
       axios
@@ -32,16 +26,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
     ),
   );
 
-  const collection: IArticle[] = [];
+  const collection: { [url: string]: IArticle } = {};
   data.forEach((array) => {
-    collection.push(...array);
+    array.forEach((el) => {
+      if (
+        el.url.includes('https') &&
+        el.urlToImage &&
+        el.urlToImage.includes('https')
+      ) {
+        collection[el.url] = el;
+      }
+    });
   });
-  const articles = collection.filter(
-    (el) =>
-      el.url.includes('https') &&
-      el.urlToImage &&
-      el.urlToImage.includes('https'),
-  );
+
+  const articles: IArticle[] = Object.values(collection);
   articles.sort(
     (b, a) =>
       new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime(),
