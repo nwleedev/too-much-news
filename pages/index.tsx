@@ -5,8 +5,8 @@ import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-  if (!API_KEY) {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  if (!API_URL) {
     return {
       props: {
         data: [],
@@ -14,12 +14,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const API_URL = `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}&pageSize=100&category=`;
   const categories = ['business', 'science', 'health', 'technology'];
   const data = await Promise.all(
     categories.map((category) =>
       axios
-        .get(API_URL + category)
+        .get(API_URL + category + '.json')
         .then((resp) => resp.data)
         .then((data) => data.articles as IArticle[])
         .catch(() => [] as IArticle[]),
