@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
@@ -47,7 +47,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       data: articles,
     },
-    revalidate: 60 * 10,
   };
 };
 
