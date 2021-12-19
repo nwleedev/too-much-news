@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build && rm -rf /opt/build/cache"
+  command = "rm -rf /opt/build/cache && npm run build"
   publish = ".next"
 
 [[plugins]]

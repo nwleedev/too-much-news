@@ -6,15 +6,7 @@ import { useEffect } from 'react';
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.getRegistrations().then((registrations) => {
-          for (let r of registrations) {
-            r.unregister().then(() => {
-              navigator.serviceWorker.register('/sw.js');
-            });
-          }
-        });
-      });
+      navigator.serviceWorker.register('/sw.js');
     }
   }, []);
   return (
