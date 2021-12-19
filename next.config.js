@@ -7,7 +7,7 @@ module.exports = withPWA({
   pwa: {
     dest: 'public',
     register: true,
-    skipWaiting: true,
+    skipWaiting: false,
     runtimeCaching,
     buildExcludes: [/middleware-manifest.json$/],
   },
