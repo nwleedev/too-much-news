@@ -6,7 +6,13 @@ import { useEffect } from 'react';
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+      window.addEventListener('load', async function () {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (let i = 0; i < registrations.length; i++) {
+          await registrations[i].unregister();
+        }
+        await navigator.serviceWorker.register('/sw.js');
+      });
     }
   }, []);
   return (
