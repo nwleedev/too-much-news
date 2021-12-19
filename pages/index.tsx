@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import axios from 'axios';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
@@ -43,15 +43,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     (b, a) =>
       new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime(),
   );
+
   return {
     props: {
       data: articles,
     },
+    revalidate: 60 * 10,
   };
 };
 
 const Index = (props: any) => {
   const articles: IArticle[] = props.data;
+  console.log(articles.length);
   return (
     <div className="w-full grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
       {articles &&
