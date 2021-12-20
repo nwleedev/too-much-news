@@ -1,14 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { res } = context;
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59',
-  );
+export const getStaticSiteProps: GetStaticProps = async (context) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
@@ -23,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const data = await Promise.all(
     categories.map((category) =>
-      fetch(API_URL + category + '.json')
+      fetch(API_URL + category)
         .then((resp) => resp.json())
         .then((data) => data.articles as IArticle[])
         .catch(() => [] as IArticle[]),
