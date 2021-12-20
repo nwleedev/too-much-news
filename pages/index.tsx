@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { GetStaticProps } from 'next';
-import axios from 'axios';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
@@ -15,11 +14,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const categories = ['business', 'science', 'health', 'technology'];
+
   const data = await Promise.all(
     categories.map((category) =>
-      axios
-        .get(API_URL + category + '.json')
-        .then((resp) => resp.data)
+      fetch(API_URL + category + '.json')
+        .then((resp) => resp.json())
         .then((data) => data.articles as IArticle[])
         .catch(() => [] as IArticle[]),
     ),
@@ -48,7 +47,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       data: articles,
     },
-    revalidate: 30,
+    revalidate: 60,
   };
 };
 
