@@ -1,15 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
       props: {
         timestamp: Date.now(),
         data: [],
+        size: 0,
       },
     };
   }
@@ -28,8 +29,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   );
 
   const collection: { [url: string]: IArticle } = {};
-  data.forEach((array) => {
-    array.forEach((el) => {
+  for (let i = 0; i < data.length; i++) {
+    for (let j = 0; j < data[i].length; j++) {
+      let el = data[i][j];
       if (
         el.url.includes('https') &&
         el.urlToImage &&
@@ -37,9 +39,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       ) {
         collection[el.url] = el;
       }
-    });
-  });
-
+    }
+  }
   const articles: IArticle[] = Object.values(collection);
   articles.sort(
     (b, a) =>
@@ -49,8 +50,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       timestamp: Date.now(),
       data: articles,
+      size: articles.length,
     },
-    revalidate: 60,
   };
 };
 
