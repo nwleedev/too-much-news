@@ -1,13 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { res } = context;
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59',
+  );
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
       props: {
+        timestamp: Date.now(),
         data: [],
       },
     };
@@ -42,12 +48,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     (b, a) =>
       new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime(),
   );
-
   return {
     props: {
+      timestamp: Date.now(),
       data: articles,
     },
-    revalidate: 60,
   };
 };
 
