@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next';
 import { IArticle } from '../interfaces/article';
 import Article from '../components/Article';
 
-export const getStaticSiteProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!API_URL) {
     return {
@@ -21,7 +21,9 @@ export const getStaticSiteProps: GetStaticProps = async (context) => {
       fetch(API_URL + category)
         .then((resp) => resp.json())
         .then((data) => data.articles as IArticle[])
-        .catch(() => [] as IArticle[]),
+        .catch((err) => {
+          return [] as IArticle[];
+        }),
     ),
   );
 
@@ -48,6 +50,7 @@ export const getStaticSiteProps: GetStaticProps = async (context) => {
       timestamp: Date.now(),
       data: articles,
     },
+    revalidate: 60,
   };
 };
 
