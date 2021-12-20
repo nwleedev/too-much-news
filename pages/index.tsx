@@ -54,7 +54,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 const Index = (props: any) => {
   const articles: IArticle[] = props.data;
-  console.log(articles.slice(0, 2));
   return (
     <div className="w-full grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
       {articles &&
