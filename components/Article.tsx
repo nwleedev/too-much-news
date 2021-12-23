@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { IArticle } from '../interfaces/article';
+import { useRouter } from 'next/router';
 
 const Article = ({ article, i }: { article: IArticle; i: number }) => {
+  const router = useRouter();
   const [isSelected, setIsSelected] = useState(false);
   useEffect(() => {
     const background = document.getElementById(`background_${i}`);
@@ -11,12 +13,17 @@ const Article = ({ article, i }: { article: IArticle; i: number }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.localStorage.setItem('article', JSON.stringify(article));
+    router.push('/news');
+  };
   return (
     <a
-      href={article.url}
       target="_blank"
       rel="noreferrer"
       className={`shadow-xl rounded-xl`}
+      onClick={handleClick}
     >
       <div
         id={`background_${i}`}
