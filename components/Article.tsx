@@ -29,7 +29,7 @@ const Article = ({ article, i }: { article: IArticle; i: number }) => {
         id={`background_${i}`}
         className={`rounded-xl h-80 px-2 py-1`}
         style={{
-          backgroundImage: `url(${article.urlToImage}), url('/on_error.png')`,
+          backgroundImage: `url(${article.urlToImage})`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -46,7 +46,7 @@ const Article = ({ article, i }: { article: IArticle; i: number }) => {
           <h2
             className="text-white text-lg font-semibold"
             style={{
-              textShadow: '0.2px 0.2px 4px black',
+              textShadow: '0.6px 0.6px 3px black',
             }}
           >
             {article.title}

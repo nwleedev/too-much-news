@@ -13,7 +13,9 @@ const Layout = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
         }}
       >
         <div className="md:mx-auto md:container h-12 flex items-center">
-          <h1 className="text-white ml-6 text-xl text-shadow">Too Much</h1>
+          <h1 className="text-white ml-6 text-xl font-bold text-shadow">
+            Too Much
+          </h1>
         </div>
       </div>
       <>{children}</>
